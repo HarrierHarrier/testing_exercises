@@ -25,3 +25,11 @@ def test__replace_word__multiple_appearence_replaced():
     assert replace_word(
         'hello world hello', 'hello', 'goodbye'
     ) == 'goodbye world goodbye'
+
+
+def test__replace_word__case_sensitive_replace_from():
+    assert replace_word('Hello world', 'hello', 'goodbye') == 'goodbye world'
+
+
+def test__replace_word__case_sensitive_replace_to():
+    assert replace_word('hello world', 'hello', 'Goodbye') == 'Goodbye world'
