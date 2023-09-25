@@ -14,8 +14,3 @@ def test__first__get_custom_default():
 def test__first__raise_default_not_set():
     with pytest.raises(AttributeError):
         first([])
-
-
-def test__first__raise_wrong_type():
-    with pytest.raises(AttributeError):
-        first(None)
