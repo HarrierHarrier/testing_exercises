@@ -7,28 +7,32 @@ from functions.level_1.two_date_parser import compose_datetime_from
 
 
 @freeze_time('2023-01-01')
-def test__compose_datetime_from__date_str_tomorow():
-    test_value = datetime.datetime.now() + datetime.timedelta(days=1)
-
-    value = compose_datetime_from('tomorrow', '00:00')
-
-    assert value == test_value
-
-
-@freeze_time('2023-01-01')
-def test__compose_datetime_from__date_str_not_tomorow():
-    test_value = datetime.datetime.now()
-
-    value = compose_datetime_from('not tomorrow', '00:00')
-
-    assert value == test_value
+@pytest.mark.parametrize(
+    "date_str,time_str,expected_result",
+    [
+        ('tomorrow', '00:00', datetime.datetime(2023, 1, 2, 0, 0)),
+        ('not tomorrow', '00:00', datetime.datetime(2023, 1, 1, 0, 0)),
+    ],
+    ids=[
+        'date_str_tomorow',
+        'date_str_not_tomorow',
+    ]
+)
+def test__compose_datetime_from__success(date_str, time_str, expected_result):
+    assert compose_datetime_from(date_str, time_str) == expected_result
 
 
-def test__compose_datetime_from__invalid_time_str_value():
-    with pytest.raises(ValueError):
-        compose_datetime_from('not tomorrow', '0911')
-
-
-def test__compose_datetime_from__invalid_time_str_type():
-    with pytest.raises(AttributeError):
-        compose_datetime_from('not tomorrow', None)
+@pytest.mark.parametrize(
+    "date_str,time_str,expected_raise",
+    [
+        ('not tomorrow', '0911', pytest.raises(ValueError)),
+        ('not tomorrow', None, pytest.raises(AttributeError)),
+    ],
+    ids=[
+        'invalid_time_str_value',
+        'invalid_time_str_type',
+    ]
+)
+def test__compose_datetime_from__fail(date_str, time_str, expected_raise):
+    with expected_raise:
+        compose_datetime_from(date_str, time_str)
