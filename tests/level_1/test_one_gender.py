@@ -1,19 +1,20 @@
+import pytest
+
 from functions.level_1.one_gender import genderalize
 
 
-def test__genderalize__check_male_verb():
-    assert genderalize(
-        verb_male='сделал', verb_female='сделала', gender='male'
-    ) == 'сделал'
-
-
-def test__genderalize__check_female_verb():
-    assert genderalize(
-        verb_male='сделал', verb_female='сделала', gender='female'
-    ) == 'сделала'
-
-
-def test__genderalize__check_another_verb():
-    assert genderalize(
-        verb_male='сделал', verb_female='сделала', gender='genderfluid'
-    ) == 'сделала'
+@pytest.mark.parametrize(
+    "verb_male,verb_female,gender,expected_result",
+    [
+        ('сделал', 'сделала', 'male', 'сделал'),
+        ('сделал', 'сделала', 'female', 'сделала'),
+        ('сделал', 'сделала', 'genderfluid', 'сделала'),
+    ],
+    ids=[
+        'male_verb',
+        'female_verb',
+        'another_verb'
+    ]
+)
+def test__genderalize(verb_male, verb_female, gender, expected_result):
+    assert genderalize(verb_male, verb_female, gender) == expected_result
