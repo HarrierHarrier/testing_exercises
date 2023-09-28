@@ -1,4 +1,27 @@
+import pytest
+
 from functions.level_2.five_replace_word import replace_word
+
+
+@pytest.mark.parametrize(
+    "text,replace_from,replace_to,expected_result",
+    [
+        ('hello world', 'hello', 'goodbye', 'goodbye world'),
+        ('hello world hello', 'hello', 'goodbye', 'goodbye world goodbye'),
+        ('Hello world', 'hello', 'goodbye', 'goodbye world'),
+        ('hello world', 'hello', 'Goodbye', 'Goodbye world'),
+    ],
+    ids=[
+        'one_appearence_replaced',
+        'multiple_appearence_replaced',
+        'case_sensitive_replace_from',
+        'case_sensitive_replace_to',
+    ]
+)
+def test__replace_word__success(
+    text, replace_from, replace_to, expected_result
+):
+    assert replace_word(text, replace_from, replace_to) == expected_result
 
 
 def test__replace_word__old_word_removed():
@@ -15,21 +38,3 @@ def test_replace_word__new_word_appeared():
     replaced_text = replace_word('hello world', 'hello', new_word)
 
     assert new_word in replaced_text
-
-
-def test__replace_word__one_appearence_replaced():
-    assert replace_word('hello world', 'hello', 'goodbye') == 'goodbye world'
-
-
-def test__replace_word__multiple_appearence_replaced():
-    assert replace_word(
-        'hello world hello', 'hello', 'goodbye'
-    ) == 'goodbye world goodbye'
-
-
-def test__replace_word__case_sensitive_replace_from():
-    assert replace_word('Hello world', 'hello', 'goodbye') == 'goodbye world'
-
-
-def test__replace_word__case_sensitive_replace_to():
-    assert replace_word('hello world', 'hello', 'Goodbye') == 'Goodbye world'
