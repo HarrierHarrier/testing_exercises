@@ -4,55 +4,57 @@ from functions.level_2.five_replace_word import replace_word
 
 
 @pytest.mark.parametrize(
-    "replace_from,replace_to",
+    "replace_from",
     [
-        ("hello", "goodbye"),
-        ("world", "goodbye"),
+        "hello",
+        "world",
     ]
 )
-def test__replace_word__old_word_removed(replace_from, replace_to):
-    replaced_text = replace_word("hello world", replace_from, replace_to)
+def test__replace_word__old_word_removed(replace_from):
+    replaced_text = replace_word("hello world", replace_from, "goodbye")
 
     assert replace_from not in replaced_text
 
 
 @pytest.mark.parametrize(
-    "replace_from,replace_to",
+    "replace_to",
     [
-        ("hello", "goodbye"),
-        ("world", "goodbye"),
+        "foo",
+        "spam",
     ]
 )
-def test_replace_word__new_word_appeared(replace_from, replace_to):
-    replaced_text = replace_word("hello world", replace_from, replace_to)
+def test_replace_word__new_word_appeared(replace_to):
+    replaced_text = replace_word("hello world", "hello", replace_to)
 
     assert replace_to in replaced_text
 
 
 @pytest.mark.parametrize(
-    "text,replace_from,replace_to,expected_result",
+    ("replace_from", "expected_result"),
     [
-        ("hello world", "hello", "goodbye", "goodbye world"),
-        ("hello world", "world", "goodbye", "hello goodbye"),
+        ("hello", "goodbye world"),
+        ("world", "hello goodbye"),
     ]
 )
 def test__replace_word__one_appearence_replaced(
-    text, replace_from, replace_to, expected_result
+    replace_from, expected_result
 ):
-    assert replace_word(text, replace_from, replace_to) == expected_result
+    replaces_text = replace_word("hello world", replace_from, "goodbye")
+
+    assert replaces_text == expected_result
 
 
 @pytest.mark.parametrize(
-    "text,replace_from,replace_to,expected_result",
+    ("text", "replace_from", "expected_result"),
     [
-        ("hello world hello", "hello", "goodbye", "goodbye world goodbye"),
-        ("hello world world", "world", "goodbye", "hello goodbye goodbye"),
+        ("hello world hello", "hello", "goodbye world goodbye"),
+        ("hello world world", "world", "hello goodbye goodbye"),
     ]
 )
 def test__replace_word__multiple_appearence_replaced(
-    text, replace_from, replace_to, expected_result
+    text, replace_from, expected_result
 ):
-    assert replace_word(text, replace_from, replace_to) == expected_result
+    assert replace_word(text, replace_from, "goodbye") == expected_result
 
 
 def test__replace_word__case_sensitive_replace_from():
