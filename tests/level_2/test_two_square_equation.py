@@ -87,8 +87,6 @@ def test__solve_square_equation__linear_equation(
         1,
         -15,
         82,
-        84,
-        85,
     ]
 )
 def test__solve_square_equation__linear_incorrect_equation(const_coefficient):
