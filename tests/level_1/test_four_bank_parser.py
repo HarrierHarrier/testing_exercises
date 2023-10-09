@@ -31,24 +31,24 @@ def test__parse_ineco_expense__amount_parsed_correctly(amount: float):
 
 
 @pytest.mark.parametrize(
-    "card",
+    "last_digits",
     [
-        BankCard(last_digits="1029", owner="Alice"),
-        BankCard(last_digits="2910", owner="Bob"),
+        "1029",
+        "2910",
     ]
 )
-def test__parse_ineco_expense__card_parsed_correctly(card: BankCard):
+def test__parse_ineco_expense__card_parsed_correctly(last_digits: str):
     card_a = BankCard(last_digits="1029", owner="Alice")
     card_b = BankCard(last_digits="2910", owner="Bob")
     sms = SmsMessage(
-        text=f"??? ??? 100.00 ???, {card.last_digits} 01.01.23 04:20 Market authcode ****",
+        text=f"??? ??? 100.00 ???, {last_digits} 01.01.23 04:20 Market authcode ****",
         author="Green Bank",
         sent_at=datetime.datetime(2023, 1, 2, 0, 0)
     )
 
     value = parse_ineco_expense(sms=sms, cards=[card_a, card_b])
 
-    assert value.card == card
+    assert value.card.last_digits == last_digits
 
 
 @pytest.mark.parametrize(
