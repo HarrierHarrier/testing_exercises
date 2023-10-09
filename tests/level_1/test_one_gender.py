@@ -4,7 +4,7 @@ from functions.level_1.one_gender import genderalize
 
 
 @pytest.mark.parametrize(
-    "verb_male,verb_female",
+    ("verb_male", "verb_female"),
     [
         ("сделал", "сделала"),
         ("сказал", "сказала"),
@@ -18,7 +18,7 @@ def test__genderalize__check_male_verb(verb_male, verb_female):
 
 
 @pytest.mark.parametrize(
-    "verb_male,verb_female",
+    ("verb_male", "verb_female"),
     [
         ("сделал", "сделала"),
         ("сказал", "сказала"),

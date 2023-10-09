@@ -11,7 +11,7 @@ def test__get_median_value__empty_list():
 # как XPASS
 @pytest.mark.xfail(reason="wrong implementation")
 @pytest.mark.parametrize(
-    "items,expected_result",
+    ("items", "expected_result"),
     [
         ([11, 9, 3, 5, 5], 5),
         ([1, 2, 3, 4, 5], 3),
@@ -23,7 +23,7 @@ def test__get_median_value__odd_items_num(items, expected_result):
 
 @pytest.mark.xfail(reason="wrong implementation")
 @pytest.mark.parametrize(
-    "items,expected_result",
+    ("items", "expected_result"),
     [
         ([1, 3, 5, 7], 4),
         ([1, 1, 2, 3], 1),

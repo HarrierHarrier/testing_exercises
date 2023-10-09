@@ -4,7 +4,7 @@ from functions.level_2.two_square_equation import solve_square_equation
 
 
 @pytest.mark.parametrize(
-    "square_coefficient,linear_coefficient,const_coefficient",
+    ("square_coefficient", "linear_coefficient", "const_coefficient"),
     [
         (1, 0, 1),
         (5, -2, 9),
@@ -23,7 +23,7 @@ def test__solve_square_equation__no_roots(
 
 
 @pytest.mark.parametrize(
-    "square_coefficient,linear_coefficient,const_coefficient,expected_result",
+    ("square_coefficient", "linear_coefficient", "const_coefficient", "expected_result"),
     [
         (1, 0, 0, 0.0),
         (4, 8, 4, -1.0),
@@ -43,7 +43,7 @@ def test__solve_square_equation__one_root(
 
 
 @pytest.mark.parametrize(
-    "square_coefficient,linear_coefficient,const_coefficient,expected_result",
+    ("square_coefficient", "linear_coefficient", "const_coefficient", "expected_result"),
     [
         (1, 1, 0, (-1.0, 0.0)),
         (1, 27, 26, (-26.0, -1.0)),
@@ -63,7 +63,7 @@ def test__solve_square_equation__two_roots(
 
 
 @pytest.mark.parametrize(
-    "linear_coefficient,const_coefficient,expected_result",
+    ("linear_coefficient", "const_coefficient", "expected_result"),
     [
         (1, 0, 0),
         (-20, -92, -4.6),
