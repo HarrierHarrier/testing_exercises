@@ -1,17 +1,47 @@
+import pytest
+
 from functions.level_1.five_title import change_copy_item
 
 
-def test__change_copy_item__add_prefix():
-    assert change_copy_item('Item') == 'Copy of Item'
+@pytest.mark.parametrize(
+    "title",
+    [
+        "Item",
+        "Name",
+        "filename",
+        "multiple words",
+    ]
+)
+def test__change_copy_item__add_prefix(title):
+    assert change_copy_item(title) == f"Copy of {title}"
 
 
-def test__change_copy_item__add_copy_number():
-    assert change_copy_item('Copy of Item') == 'Copy of Item (2)'
+@pytest.mark.parametrize(
+    "title",
+    [
+        "Copy of Item",
+        "Copy of Name",
+        "Copy of filename",
+        "Copy of multiple words",
+    ]
+)
+def test__change_copy_item__add_copy_number(title):
+    assert change_copy_item(title) == f"{title} (2)"
 
 
-def test__change_copy_item__increase_copy_number():
-    assert change_copy_item('Copy of Item (2)') == 'Copy of Item (3)'
+@pytest.mark.parametrize(
+    "copy_num",
+    [
+        2,
+        22,
+        1234,
+    ]
+)
+def test__change_copy_item__increase_copy_number(copy_num):
+    assert change_copy_item(
+        f"Copy of Item ({copy_num})"
+    ) == f"Copy of Item ({copy_num + 1})"
 
 
 def test__change_copy_item__check_max_length():
-    assert change_copy_item('Item', 4) == 'Item'
+    assert change_copy_item("Item", 4) == "Item"
