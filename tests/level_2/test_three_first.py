@@ -4,7 +4,7 @@ from functions.level_2.three_first import first
 
 
 @pytest.mark.parametrize(
-    "items,expected_result",
+    ("items", "expected_result"),
     [
         ([1, 2, 3], 1),
         ([2, 1, 2, 3], 2),

@@ -15,35 +15,25 @@ from functions.level_1.two_date_parser import compose_datetime_from
         "12:36",
     ]
 )
-def test__compose_datetime_from__date_str_tomorow(time_str):
-    time_value = time_str.split(":")
-    test_value = datetime.datetime.now() + datetime.timedelta(
-        days=1, hours=int(time_value[0]), minutes=int(time_value[1])
+def test__compose_datetime_from__time_str_prased(time_str):
+    test_value = datetime.datetime.strptime(
+        f"2023-01-02 {time_str}", "%Y-%m-%d %H:%M"
     )
 
-    value = compose_datetime_from("tomorrow", time_str)
-
-    assert value == test_value
+    assert compose_datetime_from("tomorrow", time_str) == test_value
 
 
 @freeze_time("2023-01-01")
 @pytest.mark.parametrize(
-    "date_str,time_str",
+    "date_str",
     [
-        ("not tomorrow", "00:00"),
-        ("something", "04:20"),
-        ("something else", "12:36"),
+        "not tomorrow",
+        "something",
+        "something else",
     ]
 )
-def test__compose_datetime_from__date_str_not_tomorow(date_str, time_str):
-    time_value = time_str.split(":")
-    test_value = datetime.datetime.now() + datetime.timedelta(
-        hours=int(time_value[0]), minutes=int(time_value[1])
-    )
-
-    value = compose_datetime_from(date_str, time_str)
-
-    assert value == test_value
+def test__compose_datetime_from__date_str_not_tomorow(date_str):
+    assert compose_datetime_from(date_str, "00:00") == datetime.datetime.now()
 
 
 @pytest.mark.parametrize(
